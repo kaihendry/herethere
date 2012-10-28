@@ -22,7 +22,7 @@ function successCallback(p) {
 		console.log(t);
 		var v = localStorage.getItem(k);
 		console.log("foo" + v);
-		c.innerHTML += '<li>' + t + ': ' + v + '<a href="maps:?q=' + v + '">on a map</a></li>';
+		c.innerHTML += '<li>' + t + ': ' + v + '&mdash;<a href="maps:?q=' + v + '">on a map</a></li>';
 	}
 
 }
