@@ -6,7 +6,7 @@ var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/i) ? true : false );
 if (typeof Number.prototype.toRad == 'undefined') {
   Number.prototype.toRad = function() {
     return this * Math.PI / 180;
-  }
+  };
 }
 
 function save(){
@@ -43,7 +43,7 @@ function successCallback(p) {
 
 	var d = +new Date;
 	var coords = p.coords; // http://stackoverflow.com/questions/11042212
-	var coords = JSON.stringify(coords); // BUG: not working in FF [xpconnect wrapped nsIDOMGeoPositionCoords]
+	coords = JSON.stringify(coords); // BUG: not working in FF [xpconnect wrapped nsIDOMGeoPositionCoords]
 	localStorage.setItem(d, coords);
 	//console.log("Set: " + d);
 	//console.log(coords);
@@ -66,9 +66,10 @@ function successCallback(p) {
 	for (var k in localStorageKeys){
 		var t = new Date(parseInt(localStorageKeys[k],10)).toRelativeTime();
 		var v = JSON.parse(localStorage.getItem(localStorageKeys[k]));
+		if(! v.latitude) { continue; }
 		//console.log("Got: " + parseInt(localStorageKeys[k],10));
 		var c = v.latitude + ',' + v.longitude;
-		var desc=""
+		var desc="";
 		if (v.desc) { desc = v.desc; }
 		var s = '<li><input value="' + desc + '" name=' + parseInt(localStorageKeys[k],10) + ' type=text>' + 
 		t + ' d: ' + distance(v.latitude, v.longitude, p.coords.latitude, p.coords.longitude).toFixed(2) +'km &mdash; <a href="';
@@ -96,34 +97,5 @@ function errorCallback(e) {
 function geohello() {
 	navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 }
-
-function m() { 
-e = document.getElementById("e");
-console.log("Emailing: " + e.value);
-postAjax(e.value, JSON.stringify(localStorage));
-}
-
-postAjax = function(email, data) {
-	var url = "http://custom.webconverger.com/test-html.php";
-	var ajaxRequest = getAjaxRequest();
-	ajaxRequest.open("POST", url, true);
-	ajaxRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	ajaxRequest.send("email=" + encodeURIComponent(email) + "&data=" + encodeURIComponent(data));
-};
-
-// Returns an AJAX request obj
-getAjaxRequest = function() {
-
-	var ajaxRequest;
-	ajaxRequest = new XMLHttpRequest();
-	ajaxRequest.onreadystatechange = function() {
-		if (ajaxRequest.readyState == 4) {
-			console.log(ajaxRequest.responseText);
-		}
-	};
-
-	return ajaxRequest;
-
-};
 
 setInterval('save()', 15 * 1000);
