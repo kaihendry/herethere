@@ -53,7 +53,7 @@ function successCallback(p) {
 		var c = v.latitude + ',' + v.longitude;
 		var s = '<li>' + t + ': ' + c + ' d: ' + distance(v.latitude, v.longitude, p.coords.latitude, p.coords.longitude).toFixed(2) +'km &mdash;<a href="';
 		if (iOS) {
-		s += 'maps:?q=' + c + '">on a map</a></li>';
+		s += 'maps://?q=' + c + '">on a map</a></li>';
 		} else {
 		s += 'https://maps.google.com/maps?ll=' + c + '">on a map</a></li>';
 		}
@@ -61,7 +61,7 @@ function successCallback(p) {
 	}
 }
 
-function eat() {
+function clear() {
 	c = document.getElementById("crumbs");
 	c.innerHTML = "";
 	localStorage.clear();
