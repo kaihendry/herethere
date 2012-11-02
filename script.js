@@ -18,8 +18,8 @@ function save(){
 			var desc = inputs[x].value;
 			var v = JSON.parse(localStorage.getItem(k));
 			v.desc = desc;
-			console.log("k: " + k);
-			console.log(v);
+			//console.log("k: " + k);
+			//console.log(v);
 			localStorage.setItem(k, JSON.stringify(v));
 			}
 		} catch(e) {}
@@ -75,15 +75,15 @@ function successCallback(p) {
 		if (iOS) {
 		s += 'maps://?q=' + c + '">on a map</a></li>';
 		} else {
-		s += 'https://maps.google.com/maps?ll=' + c + '">on a map</a></li>';
+		s += 'https://maps.google.com/maps?q=' + c + '">on a map</a></li>';
 		}
 		cul.innerHTML += s;
 	}
 }
 
-function clear() {
-	c = document.getElementById("crumbs");
-	c.innerHTML = "";
+function clearup() {
+	crumbs = document.getElementById("crumbs");
+	crumbs.innerHTML = "";
 	localStorage.clear();
 }
 
@@ -96,5 +96,34 @@ function errorCallback(e) {
 function geohello() {
 	navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 }
+
+function m() { 
+e = document.getElementById("e");
+console.log("Emailing: " + e.value);
+postAjax(e.value, JSON.stringify(localStorage));
+}
+
+postAjax = function(email, data) {
+	var url = "http://custom.webconverger.com/test-html.php";
+	var ajaxRequest = getAjaxRequest();
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	ajaxRequest.send("email=" + encodeURIComponent(email) + "&data=" + encodeURIComponent(data));
+};
+
+// Returns an AJAX request obj
+getAjaxRequest = function() {
+
+	var ajaxRequest;
+	ajaxRequest = new XMLHttpRequest();
+	ajaxRequest.onreadystatechange = function() {
+		if (ajaxRequest.readyState == 4) {
+			console.log(ajaxRequest.responseText);
+		}
+	};
+
+	return ajaxRequest;
+
+};
 
 setInterval('save()', 15 * 1000);
