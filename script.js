@@ -41,7 +41,7 @@ return R * c;
 
 function successCallback(p) {
 
-	var d = Date.now();
+	var d = +new Date;
 	var coords = p.coords; // http://stackoverflow.com/questions/11042212
 	var coords = JSON.stringify(coords); // BUG: not working in FF [xpconnect wrapped nsIDOMGeoPositionCoords]
 	localStorage.setItem(d, coords);

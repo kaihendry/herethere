@@ -13,17 +13,17 @@
 <dl id="status"></dl>
 
 <ul id="crumbs"></ul>
+
 <button onclick="save();">Save descriptions</button>
 
-<form action="http://custom.webconverger.com/test-html.php" method="post">
-<input id=e name=email type=email></input>
+<form action="http://custom.webconverger.com/email.php" method="post">
+<input required id=e name=email type=email></input>
 <input id=data type=hidden name=data>
-<input type=submit>
-<form>
-<button onclick="m();">Mail me points</button>
+<button onclick='d = document.getElementById("data"); d.value=JSON.stringify(localStorage);'>Email</button>
+</form>
 
 <button onclick="clearup();">Clear locations</button>
 
-<p><a href="https://github.com/kaihendry/herethere">Sources on github</a></p>
+<p><a href="https://github.com/kaihendry/herethere">Please contribute to the github</a></p>
 
 </body></html>
