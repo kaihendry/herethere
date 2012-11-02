@@ -9,6 +9,23 @@ if (typeof Number.prototype.toRad == 'undefined') {
   }
 }
 
+function save(){
+	var inputs = document.getElementsByTagName("input");
+	for (x=0;x<=inputs.length;x++){
+		try {
+			var k = inputs[x].getAttribute("name");
+			if (inputs[x].value) {
+			var desc = inputs[x].value;
+			var v = JSON.parse(localStorage.getItem(k));
+			v.desc = desc;
+			console.log("k: " + k);
+			console.log(v);
+			localStorage.setItem(k, JSON.stringify(v));
+			}
+		} catch(e) {}
+	}
+}
+
 function distance(lat1,lon1,lat2,lon2) {
 var R = 6371; // km
 var dLat = (lat2-lat1).toRad();
@@ -51,7 +68,10 @@ function successCallback(p) {
 		var v = JSON.parse(localStorage.getItem(localStorageKeys[k]));
 		//console.log("Got: " + parseInt(localStorageKeys[k],10));
 		var c = v.latitude + ',' + v.longitude;
-		var s = '<li>' + t + ': ' + c + ' d: ' + distance(v.latitude, v.longitude, p.coords.latitude, p.coords.longitude).toFixed(2) +'km &mdash;<a href="';
+		var desc=""
+		if (v.desc) { desc = v.desc; }
+		var s = '<li><input value="' + desc + '" name=' + parseInt(localStorageKeys[k],10) + ' type=text>' + 
+		t + ' d: ' + distance(v.latitude, v.longitude, p.coords.latitude, p.coords.longitude).toFixed(2) +'km &mdash; <a href="';
 		if (iOS) {
 		s += 'maps://?q=' + c + '">on a map</a></li>';
 		} else {
@@ -76,3 +96,5 @@ function errorCallback(e) {
 function geohello() {
 	navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 }
+
+setInterval('save()', 15 * 1000);
