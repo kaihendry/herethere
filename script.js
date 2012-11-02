@@ -1,11 +1,35 @@
 var p = {};
 var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/i) ? true : false );
 
+// From http://www.movable-type.co.uk/scripts/latlon.js
+/** Converts numeric degrees to radians */
+if (typeof Number.prototype.toRad == 'undefined') {
+  Number.prototype.toRad = function() {
+    return this * Math.PI / 180;
+  }
+}
+
+function distance(lat1,lon1,lat2,lon2) {
+var R = 6371; // km
+var dLat = (lat2-lat1).toRad();
+var dLon = (lon2-lon1).toRad();
+var lat1 = lat1.toRad();
+var lat2 = lat2.toRad();
+
+var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
+var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+return R * c;
+}
+
 function successCallback(p) {
 
 	var d = Date.now();
-//	localStorage.setItem(p.timestamp, [ p.coords.latitude, p.coords.longitude ]);
-	localStorage.setItem(d, [ p.coords.latitude, p.coords.longitude ]);
+	var coords = p.coords; // http://stackoverflow.com/questions/11042212
+	var coords = JSON.stringify(coords); // BUG: not working in FF [xpconnect wrapped nsIDOMGeoPositionCoords]
+	localStorage.setItem(d, coords);
+	//console.log("Set: " + d);
+	//console.log(coords);
 
 	s = document.getElementById("status");
 	s.innerHTML = '<dt>timestamp</dt><dd>' + new Date(p.timestamp) + '</dd>';
@@ -16,7 +40,7 @@ function successCallback(p) {
 	if(p.coords.heading) { s.innerHTML += '<dt>heading</dt><dd>' + p.coords.heading + '</dd>'; }
 	if(p.coords.speed) { s.innerHTML += '<dt>speed</dt><dd>' + p.coords.speed + '</dd>'; }
 
-	c = document.getElementById("crumbs");
+	cul = document.getElementById("crumbs");
 
 	var localStorageKeys = Object.keys(localStorage);
 	localStorageKeys.sort();
@@ -24,15 +48,16 @@ function successCallback(p) {
 
 	for (var k in localStorageKeys){
 		var t = new Date(parseInt(localStorageKeys[k],10)).toRelativeTime();
-		console.log(t);
-		var v = localStorage.getItem(localStorageKeys[k]);
-		var s = '<li>' + t + ': ' + v + '&mdash;<a href="';
+		var v = JSON.parse(localStorage.getItem(localStorageKeys[k]));
+		//console.log("Got: " + parseInt(localStorageKeys[k],10));
+		var c = v.latitude + ',' + v.longitude;
+		var s = '<li>' + t + ': ' + c + ' d: ' + distance(v.latitude, v.longitude, p.coords.latitude, p.coords.longitude).toFixed(2) +'km &mdash;<a href="';
 		if (iOS) {
-		s += 'maps:?q=' + v + '">on a map</a></li>';
+		s += 'maps:?q=' + c + '">on a map</a></li>';
 		} else {
-		s += 'https://maps.google.com/maps?ll=' + v + '">on a map</a></li>';
+		s += 'https://maps.google.com/maps?ll=' + c + '">on a map</a></li>';
 		}
-		c.innerHTML += s;
+		cul.innerHTML += s;
 	}
 }
 
