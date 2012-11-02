@@ -17,7 +17,7 @@
 <button onclick="save();">Save descriptions</button>
 
 <form action="http://custom.webconverger.com/email.php" method="post">
-<input required id=e name=email type=email></input>
+<input required id=e name=email type=email>
 <input id=data type=hidden name=data>
 <button onclick='d = document.getElementById("data"); d.value=JSON.stringify(localStorage);'>Email</button>
 </form>
