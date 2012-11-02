@@ -1,6 +1,8 @@
-# Location log, loc-log, ll
+# here & there
 
-Demo: http://ll.dabase.com
+Demo: http://ht.dabase.com
+
+Dedicated to my-soon-to-be wife [rufiec](http://twitter.com/rufiec) !
 
 ## BUGS
 

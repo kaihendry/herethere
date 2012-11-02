@@ -71,7 +71,7 @@ function successCallback(p) {
 		var c = v.latitude + ',' + v.longitude;
 		var desc="";
 		if (v.desc) { desc = v.desc; }
-		var s = '<li><input value="' + desc + '" name=' + parseInt(localStorageKeys[k],10) + ' type=text>' + 
+		var s = '<li><input placeholder="description" value="' + desc + '" name=' + parseInt(localStorageKeys[k],10) + ' type=text>' + 
 		t + ' d: ' + distance(v.latitude, v.longitude, p.coords.latitude, p.coords.longitude).toFixed(2) +'km &mdash; <a href="';
 		if (iOS) {
 		s += 'maps://?q=' + c + '">on a map</a></li>';
