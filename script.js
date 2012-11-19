@@ -47,20 +47,17 @@ function successCallback(p) {
 	//console.log("Set: " + d);
 	//console.log(coords);
 	s = document.getElementById("status");
-	s.innerHTML = '<dt>timestamp</dt><dd>' + new Date(p.timestamp) + '</dd>';
-	s.innerHTML += '<dt>latitude</dt><dd>' + p.coords.latitude + ',' + p.coords.longitude + '</dd>';
-	s.innerHTML += '<dt>accuracy</dt><dd>' + p.coords.accuracy + '</dd>';
+	s.innerHTML = '<dt>Timestamp</dt><dd>' + new Date(p.timestamp) + '</dd>';
+	s.innerHTML += '<dt>Co-ordinates</dt><dd>' + p.coords.latitude + ',' + p.coords.longitude + '</dd>';
+	s.innerHTML += '<dt>Accuracy</dt><dd>' + p.coords.accuracy + '</dd>';
 	if (p.coords.altitude) {
-		s.innerHTML += '<dt>altitude</dt><dd>' + p.coords.altitude + '</dd>';
-	}
-	if (p.coords.altitudeAccuracy) {
-		s.innerHTML += '<dt>altitude Accuracy</dt><dd>' + p.coords.altitudeAccuracy + '</dd>';
+		s.innerHTML += '<dt>Altitude</dt><dd>' + p.coords.altitude + '</dd>';
 	}
 	if (p.coords.heading) {
-		s.innerHTML += '<dt>heading</dt><dd>' + p.coords.heading + '</dd>';
+		s.innerHTML += '<dt>Heading</dt><dd>' + p.coords.heading + '</dd>';
 	}
 	if (p.coords.speed) {
-		s.innerHTML += '<dt>speed</dt><dd>' + p.coords.speed + '</dd>';
+		s.innerHTML += '<dt>Speed</dt><dd>' + p.coords.speed + '</dd>';
 	}
 
 	cul = document.getElementById("crumbs");
