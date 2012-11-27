@@ -78,11 +78,11 @@ function successCallback(p) {
 		if (v.desc) {
 			desc = v.desc;
 		}
-		var s = '<li><input placeholder="description" value="' + desc + '" name=' + parseInt(localStorageKeys[k], 10) + ' type=text>' + t + ' d: ' + distance(v.latitude, v.longitude, p.coords.latitude, p.coords.longitude).toFixed(2) + 'km &mdash; <a href="';
+		var s = '<li><input autocomplete="off" placeholder="description" value="' + desc + '" name=' + parseInt(localStorageKeys[k], 10) + ' type=text>' + t + ' d: ' + distance(v.latitude, v.longitude, p.coords.latitude, p.coords.longitude).toFixed(2) + 'km a: ' + v.accuracy.toFixed(2) + ' &mdash; <a href="';
 		if (iOS) {
-			s += 'maps://?q=' + c + '">on a map</a></li>';
+			s += 'maps://?q=' + c + '">map</a></li>';
 		} else {
-			s += 'https://maps.google.com/maps?q=' + c + '">on a map</a></li>';
+			s += 'https://maps.google.com/maps?q=' + c + '">map</a></li>';
 		}
 		cul.innerHTML += s;
 	}
@@ -101,8 +101,8 @@ function errorCallback(e) {
 }
 
 function geohello() {
-	navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+	navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {enableHighAccuracy:true} );
 }
 
+// Save form content every 15s. Is there a better way?
 setInterval('save()', 15 * 1000);
-
