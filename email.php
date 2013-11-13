@@ -1,5 +1,4 @@
 <?php
-header('Access-Control-Allow-Origin: http://ii.dabase.com');
 
 if(empty($_POST["data"])) {
 	die("No JSON");
@@ -11,9 +10,9 @@ if(empty($_POST["email"])) {
 
 $to = $_POST["email"];
 
-$json = stripslashes($_POST["data"]);
-$points = json_decode($json);
+$points = json_decode($_POST["data"]);
 
+//die("here");
 //echo "<!--\n\n";
 //print_r($points);
 //echo "-->\n\n";
@@ -23,7 +22,7 @@ $count = 0;
 foreach ($points as $key => $value){
 	$message .= "<h3>" . date("c", $key / 1000) . "</h3>\n<dl>\n";
 	$j = json_decode($value);
-	//print_r($j);
+//	print_r($j);
 	if ($j->desc) { $message .= "<dt>description</dt><dd>" . $j->desc . "</dd>\n"; }
 	if ($j->latitude) { $p = $j->latitude . "," . $j->longitude; $message .= "<dt>latitude, longitude</dt><dd>" . $p . "</dd>\n"; }
 	if ($j->accuracy) { $message .= "<dt>accuracy</dt><dd>" . $j->accuracy . "</dd>\n"; }

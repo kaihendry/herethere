@@ -20,8 +20,8 @@
 
 <style>
 dt { font-weight: bolder; }
-li:nth-child(even) { background: #C6EFFF; }
-li:nth-child(even) input { background: #C6EFFF; }
+li:nth-child(even) { background: #DBEDFF; }
+li:nth-child(even) input { background: #DBEDFF; }
 </style>
 
 <script src="/javascript-relative-time-helpers/date.extensions.js"></script>
@@ -44,7 +44,7 @@ li:nth-child(even) input { background: #C6EFFF; }
 
 <button onclick="save();">Save descriptions</button>
 
-<form action="http://custom.webconverger.com/email.php" method="post">
+<form action="http://ht.dabase.com/email.php" method="post">
 <input required id=e name=email type=email>
 <input id=data type=hidden name=data>
 <button onclick='d = document.getElementById("data"); d.value=JSON.stringify(localStorage);'>Email</button>
